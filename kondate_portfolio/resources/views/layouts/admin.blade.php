@@ -18,6 +18,8 @@
         <div class="min-h-screen bg-gray-100">
 
 
+            @include('components.admin.header')
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}

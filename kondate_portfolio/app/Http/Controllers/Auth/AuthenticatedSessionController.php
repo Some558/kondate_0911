@@ -42,6 +42,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        //ログイン画面にリダイレクト
+        return redirect()->intended(route('login', absolute: false));
     }
 }

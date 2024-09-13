@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MenuOptionsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,9 +20,15 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::middleware('auth')->group(function () {
-    //管理画面トップページ 
-    Route::get('/admin/top', function () {
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    //管理画面トップページ
+    Route::get('top', function () {
         return view('admin.top');
-    })->name('admin.top');
+    })->name('top');
+
+    //献立管理
+    Route::prefix('menu_options')->name('menu_options.')->group(function(){
+        //献立新規登録画面
+        Route::get('create' , [MenuOptionsController::class, 'create'])->name('create');
+    });
 });

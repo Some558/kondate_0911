@@ -17,11 +17,11 @@ class MenuOptionsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 献立新規登録画面表示
      */
     public function create()
     {
-        //
+        return view('admin.menu_options.create');
     }
 
     /**

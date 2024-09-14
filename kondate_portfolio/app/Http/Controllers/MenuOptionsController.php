@@ -25,11 +25,19 @@ class MenuOptionsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 献立新規登録処理
      */
     public function store(StoreMenu_OptionsRequest $request)
     {
-        //
+        // dd('カテゴリー新規登録処理のルートです', $request);
+        // dd($request->name, $request->type);
+        $menu_options = new Menu_Options();
+        $menu_options->dish_name = $request->name;
+        $menu_options->dish_type = $request->type;
+        $menu_options->user_id = auth()->id();
+        $menu_options->save();
+
+        return redirect()->route('admin.top');
     }
 
     /**

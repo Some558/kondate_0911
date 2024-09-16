@@ -35,17 +35,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($menu_options as $menu_option)
                         <tr>
-                            <td class="px-4 py-3">1</td>
-                            <td class="px-4 py-3">ラーメン</td>
-                            <td class="px-4 py-3">main</td>
+                            <td class="px-4 py-3">{{$menu_option->id}}</td>
+                            <td class="px-4 py-3">{{$menu_option->dish_name}}</td>
+                            <td class="px-4 py-3">{{$menu_option->dish_type}}</td>
                             <td class="px-4 py-3 text-lg text-gray-900">
                                 <button class="flex mr-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">編集</button>
                             </td>
                             <td class="px-4 py-3 text-lg text-gray-900">
-                                <button class="flex mr-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">削除</button>
+                                <button class="flex mr-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">削除</button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

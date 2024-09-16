@@ -9,11 +9,16 @@ use App\Models\Menu_Options;
 class MenuOptionsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
+     * 管理画面トップページ兼献立一覧表示
+     **/
+    public function top()
     {
-        //
+        //献立一覧を取得
+        $menu_options = Menu_Options::get();
+        // dd($menu_options);
+        return view('admin.top', [
+            'menu_options' => $menu_options
+        ]);
     }
 
     /**

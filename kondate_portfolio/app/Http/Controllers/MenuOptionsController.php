@@ -54,23 +54,24 @@ class MenuOptionsController extends Controller
     }
 
     /**
-     * 献立詳細画面表示
+     * show
      */
-    public function show(Request $request, int $menu_optionId)
-    {
-        $menu_option = Menu_Options::findOrFail($menu_optionId);
-        return view('admin.menu_options.show', [
-            'menu_option' => $menu_option
-        ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Menu_Options $menu_Options)
+    public function show(Menu_Options $menu_Options)
     {
         //
     }
+
+    /**
+     * 献立編集画面表示
+     */
+
+    public function edit(Request $request, int $menu_optionId)
+        {
+            $menu_option = Menu_Options::findOrFail($menu_optionId);
+            return view('admin.menu_options.edit', [
+                'menu_option' => $menu_option
+            ]);
+        }
 
     /**
      * Update the specified resource in storage.

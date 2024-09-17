@@ -42,8 +42,8 @@
                             <td class="px-4 py-3">{{$menu_option->dish_type}}</td>
                             <td class="px-4 py-3 text-lg text-gray-900">
                                 <button
-                                    {{-- 献立一覧詳細画面に遷移 --}}
-                                    onclick="location.href='{{ route('admin.menu_options.show', ['menu_optionId' => $menu_option->id]) }}'"
+                                    {{-- 献立編集画面に遷移 --}}
+                                    onclick="location.href='{{ route('admin.menu_options.edit', ['menu_optionId' => $menu_option->id]) }}'"
                                     class="flex mr-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">
                                     編集
                                 </button>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreMenu_OptionsRequest;
 use App\Http\Requests\UpdateMenu_OptionsRequest;
 use App\Models\Menu_Options;
+use Illuminate\Http\Request;
 
 class MenuOptionsController extends Controller
 {
@@ -15,7 +16,6 @@ class MenuOptionsController extends Controller
     {
         //献立一覧を取得
         $menu_options = Menu_Options::get();
-        // dd($menu_options);
         return view('admin.top', [
             'menu_options' => $menu_options
         ]);
@@ -28,16 +28,6 @@ class MenuOptionsController extends Controller
     {
         return view('admin.menu_options.create');
     }
-
-    // public function store(StoreMenu_OptionsRequest $request)
-    // {
-    //     // dd('カテゴリー新規登録処理のルートです', $request);
-    //     // dd($request->name, $request->type);
-    //     $menu_options = new Menu_Options();
-    //     $menu_options->dish_name = $request->name;
-    //     $menu_options->dish_type = $request->type;
-    //     $menu_options->user_id = auth()->id();
-    //     $menu_options->save();
 
     /**
      * 献立新規登録処理
@@ -64,11 +54,14 @@ class MenuOptionsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * 献立詳細画面表示
      */
-    public function show(Menu_Options $menu_Options)
+    public function show(Request $request, int $menu_optionId)
     {
-        //
+        $menu_option = Menu_Options::findOrFail($menu_optionId);
+        return view('admin.menu_options.show', [
+            'menu_option' => $menu_option
+        ]);
     }
 
     /**

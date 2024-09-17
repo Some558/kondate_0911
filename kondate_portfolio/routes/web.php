@@ -30,5 +30,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('create' , [MenuOptionsController::class, 'create'])->name('create');
         //献立新規登録処理
         Route::post('store' , [MenuOptionsController::class, 'store'])->name('store');
+        //献立編集画面
+        Route::get('{menu_optionId}',[MenuOptionsController::class, 'show'])->name('show');
     });
 });

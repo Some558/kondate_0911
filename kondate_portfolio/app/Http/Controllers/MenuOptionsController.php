@@ -74,11 +74,17 @@ class MenuOptionsController extends Controller
         }
 
     /**
-     * Update the specified resource in storage.
+     * 献立更新処理
      */
-    public function update(UpdateMenu_OptionsRequest $request, Menu_Options $menu_Options)
+    public function update(UpdateMenu_OptionsRequest $request, int $menu_optionId)
     {
-        //
+        // dd($request);
+        $menu_options = Menu_Options::findOrFail($menu_optionId);
+        $menu_options->dish_name = $request->name;
+        $menu_options->dish_type = $request->type;
+        $menu_options->user_id   = auth()->id(); // ユーザーIDを設定
+        $menu_options->save();
+            return redirect()->route('admin.top', ['menu_options' => $menu_options])->with('success', '献立候補の更新が完了しました。');
     }
 
     /**

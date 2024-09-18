@@ -33,6 +33,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         //献立編集画面
         Route::get('{menu_optionId}/edit',[MenuOptionsController::class, 'edit'])->name('edit');
         //献立更新処理
-        Route::POST('{menu_optionId}/update',[MenuOptionsController::class, 'update'])->name('update');
+        Route::post('{menu_optionId}/update',[MenuOptionsController::class, 'update'])->name('update');
+        //献立削除処理
+        Route::post('{menu_optionId}/destroy',[MenuOptionsController::class, 'destroy'])->name('destroy');
     });
 });

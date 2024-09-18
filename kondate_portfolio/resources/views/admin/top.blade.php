@@ -48,10 +48,15 @@
                                     編集
                                 </button>
                             </td>
-                            <td class="px-4 py-3 text-lg text-gray-900">
-                                <button class="flex mr-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">削除</button>
-                            </td>
-                        </tr>
+                                <form method="POST" action="{{ route('admin.menu_options.destroy', ['menu_optionId' => $menu_option->id])}}">
+                                    @csrf
+                                    <td class="px-4 py-3 text-lg text-gray-900">
+                                        <button type="submit" class="flex mr-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
+                                            削除
+                                        </button>
+                                    </td>
+                                </form>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

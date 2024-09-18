@@ -88,10 +88,13 @@ class MenuOptionsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 献立削除処理
      */
-    public function destroy(Menu_Options $menu_Options)
+    public function destroy(Request $request, int $menu_optionId)
     {
-        //
+        // dd($menu_optionId, $request);
+        $menu_options = Menu_Options::findOrFail($menu_optionId);
+        $menu_options->delete();
+        return redirect()->route('admin.top')->with('success', '献立候補の削除が完了しました。');
     }
 }

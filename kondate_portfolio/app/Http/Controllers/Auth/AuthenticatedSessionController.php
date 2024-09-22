@@ -27,8 +27,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        //管理画面トップページにリダイレクト
-        return redirect()->intended(route('admin.top', absolute: false));
+        //ユーザー画面トップページにリダイレクト
+        return redirect()->intended(route('user.index', absolute: false));
     }
 
     /**

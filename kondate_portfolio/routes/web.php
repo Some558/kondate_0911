@@ -11,19 +11,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// ユーザーログイン
-Route::get('/login', [LoginController::class, 'showUserLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'userLogin']);
-
 //ユーザー画面
 Route::prefix('user')->name('user.')->middleware('auth')->group(function(){
     //献立ページ表示
     Route::get('index', [UserMenuController::class, 'index'])->name('index');
 });
-
-// 管理者ログイン
-Route::get('/admin/login', [LoginController::class, 'showAdminLoginForm'])->name('admin.login');
-Route::post('/admin/login', [LoginController::class, 'adminLogin']);
 
 Route::get('/dashboard', function () {
     return redirect()->route('admin.top');

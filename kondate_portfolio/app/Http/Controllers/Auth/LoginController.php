@@ -26,7 +26,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('home'); // ユーザーのホームにリダイレクト
+            return view('user.menu');
         }
 
         return back()->withErrors([

@@ -1,85 +1,76 @@
 <x-user-layout>
     <!-- resources/views/weekly-menu.blade.php -->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weekly Menu</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .tab { cursor: pointer; padding: 10px; background: #eee; display: inline-block; }
-        .tab.active { background: #ddd; }
-    </style>
-</head>
-<body>
-    <div id="tabs">
-        @foreach(['Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur', 'Sun'] as $day)
-            <div class="tab" data-tab="{{ $day }}">{{ $day }}</div>
-        @endforeach
-    </div>
+    <!DOCTYPE html>
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weekly Menu</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 p-8">
+        <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+            <div id="tabs" class="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+                @foreach(['Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur', 'Sun'] as $day)
+                    <div class="tab w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 cursor-pointer" data-tab="{{ $day }}">{{ $day }}</div>
+                @endforeach
+            </div>
 
-    @foreach(['Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur', 'Sun'] as $day)
-        <div id="{{ $day }}" class="tab-content">
-            <h2>{{ $day }}曜日の献立</h2>
-            <div>
-                <h3>メインメニュー</h3>
-                <select name="main_menu">
-                    <option>選択式のボックス (main_menuデータベースに保存の物から選択)</option>
-                </select>
+            @foreach(['Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur', 'Sun'] as $day)
+                <div id="{{ $day }}" class="tab-content mt-4 hidden">
+                    <h2 class="text-2xl font-bold mb-4">{{ $day }}曜日の献立</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <h3 class="font-semibold mb-2">メインメニュー</h3>
+                            <select name="main_menu" class="w-full p-2 border rounded">
+                                <option>選択式のボックス (main_menuデータベースに保存の物から選択)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">サブメニュー1</h3>
+                            <select name="sub_menu_1" class="w-full p-2 border rounded">
+                                <option>選択式のボックス (sub_menuデータベースに保存の物から選択)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">サブメニュー2</h3>
+                            <select name="sub_menu_2" class="w-full p-2 border rounded">
+                                <option>選択式のボックス (sub_menuデータベースに保存の物から選択)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex space-x-4">
+                        <button class="keep bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Keep</button>
+                        <button class="random bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Random</button>
+                        <button class="delete bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Delete</button>
+                    </div>
+                </div>
+            @endforeach
+
+            <div class="mt-8 text-center">
+                <button id="week-random" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">1week_Random</button>
             </div>
-            <div>
-                <h3>サブメニュー1</h3>
-                <select name="sub_menu_1">
-                    <option>選択式のボックス (sub_menuデータベースに保存の物から選択)</option>
-                </select>
-            </div>
-            <div>
-                <h3>サブメニュー2</h3>
-                <select name="sub_menu_2">
-                    <option>選択式のボックス (sub_menuデータベースに保存の物から選択)</option>
-                </select>
-            </div>
-            <button class="keep">Keep</button>
-            <button class="random">Random</button>
-            <button class="delete">Delete</button>
         </div>
-    @endforeach
 
-    <button id="week-random">1week_Random</button>
+        <script>
+            $(document).ready(function() {
+                $('.tab-content:first').removeClass('hidden');
+                $('.tab:first').addClass('bg-white shadow');
 
-    <script>
-        $(document).ready(function() {
-            $('.tab-content:first').addClass('active');
-            $('.tab:first').addClass('active');
+                $('.tab').click(function() {
+                    var tab = $(this).data('tab');
+                    $('.tab-content').addClass('hidden');
+                    $('#' + tab).removeClass('hidden');
+                    $('.tab').removeClass('bg-white shadow');
+                    $(this).addClass('bg-white shadow');
+                });
 
-            $('.tab').click(function() {
-                var tab = $(this).data('tab');
-                $('.tab-content').removeClass('active');
-                $('#' + tab).addClass('active');
-                $('.tab').removeClass('active');
-                $(this).addClass('active');
+                $('.keep, .random, .delete, #week-random').click(function() {
+                    alert($(this).text() + ' button clicked');
+                });
             });
-
-            $('.keep').click(function() {
-                alert('Keep button clicked');
-            });
-
-            $('.random').click(function() {
-                alert('Random button clicked');
-            });
-
-            $('.delete').click(function() {
-                alert('Delete button clicked');
-            });
-
-            $('#week-random').click(function() {
-                alert('1week Random button clicked');
-            });
-        });
-    </script>
-</body>
-</html>
+        </script>
+    </body>
+    </html>
 </x-user-layout>

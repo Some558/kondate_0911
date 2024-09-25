@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MenuOptionsController;
 use App\Http\Controllers\UserMenuController;
+use App\Http\Controllers\UserDishesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
@@ -15,6 +16,8 @@ Route::get('/', function () {
 Route::prefix('user')->name('user.')->middleware('auth')->group(function(){
     //献立ページ表示
     Route::get('index', [UserMenuController::class, 'index'])->name('index');
+    //献立候補登録ページ表示
+    Route::get('dishes', [UserDishesController::class, 'index'])->name('dishes');
 });
 
 Route::get('/dashboard', function () {

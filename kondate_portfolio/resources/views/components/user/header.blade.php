@@ -6,7 +6,12 @@
             </svg>
             <span class="ml-3 text-xl">ようこそ</span>
         </a>
-
+        <button
+        {{-- 献立編集画面に遷移 --}}
+        onclick="location.href='{{ route('user.dishes') }}'"
+        class="flex ml-auto text-white bg-gray-700 border-0 py-2 px-6 focus:outline-none hover:bg-gray-900 rounded">
+        献立候補登録
+        </button>
         <form method="POST" action="{{ route('logout') }}" class='md:ml-auto'>
         @csrf
             <button

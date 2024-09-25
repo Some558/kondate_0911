@@ -5,15 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserDishesRequest;
 use App\Http\Requests\UpdateUserDishesRequest;
 use App\Models\UserDishes;
+use App\Models\Menu_Options;
+use Illuminate\Http\Request;
 
 class UserDishesController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * 献立候補一覧画面表示
      */
     public function index()
     {
-        //
+        //献立候補を取得
+        $menu_options = Menu_Options::all(); // Menu_Optionsモデルを使用
+        return view('user.dishes', [
+            'menu_options' => $menu_options
+        ]);
     }
 
     /**

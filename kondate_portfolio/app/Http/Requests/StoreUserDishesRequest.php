@@ -11,7 +11,7 @@ class StoreUserDishesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreUserDishesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'menu_option_id' => 'required|exists:menu_options,id',
         ];
     }
 }

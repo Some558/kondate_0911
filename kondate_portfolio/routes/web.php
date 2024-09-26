@@ -13,11 +13,13 @@ Route::get('/', function () {
 });
 
 //ユーザー画面
-Route::prefix('user')->name('user.')->middleware('auth')->group(function(){
-    //献立ページ表示
+Route::prefix('user')->name('user.')->middleware('auth')->group(function() {
+    // 献立ページ表示
     Route::get('index', [UserMenuController::class, 'index'])->name('index');
-    //献立候補登録ページ表示
+    // 献立候補登録ページ表示
     Route::get('dishes', [UserDishesController::class, 'index'])->name('dishes');
+    // ユーザー毎献立候補新規登録
+    Route::post('dishes', [UserDishesController::class, 'store'])->name('dishes.store');
 });
 
 Route::get('/dashboard', function () {

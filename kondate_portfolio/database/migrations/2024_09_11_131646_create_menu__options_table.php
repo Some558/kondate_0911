@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('menu__options', function (Blueprint $table) {
+        Schema::create('menu_options', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('dish_name')->max(20)->comment('献立名');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('menu__options');
+        Schema::dropIfExists('menu_options');
     }
 };

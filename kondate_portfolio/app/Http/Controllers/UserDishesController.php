@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUserDishesRequest;
 use App\Http\Requests\UpdateUserDishesRequest;
 use App\Models\UserDishes;
-use App\Models\Menu_Options;
+use App\Models\MenuOptions;
 use Illuminate\Http\Request;
 
 class UserDishesController extends Controller
@@ -16,7 +16,7 @@ class UserDishesController extends Controller
     public function index()
     {
         //献立候補を取得
-        $menu_options = Menu_Options::all(); // Menu_Optionsモデルを使用
+        $menu_options = MenuOptions::all(); // Menu_Optionsモデルを使用
         return view('user.dishes', [
             'menu_options' => $menu_options
         ]);
@@ -45,7 +45,7 @@ class UserDishesController extends Controller
         $menuOptionId = $request->input('menu_option_id'); // フォームから送信されたmenu_option_idを取得
 
         // 新しいユーザー献立を作成
-        $userDishes = new UserDish();
+        $userDishes = new UserDishes();
         $userDishes->user_id = $userId; // 認証済みユーザーのIDを設定
         $userDishes->menu_option_id = $menuOptionId; // フォームから送信されたmenu_option_idを設定
 

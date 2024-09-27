@@ -45,15 +45,15 @@ class UserDishesController extends Controller
         $menuOptionId = $request->input('menu_option_id'); // フォームから送信されたmenu_option_idを取得
 
         // 新しいユーザー献立を作成
-        $userDish = new UserDish();
-        $userDish->user_id = $userId; // 認証済みユーザーのIDを設定
-        $userDish->menu_option_id = $menuOptionId; // フォームから送信されたmenu_option_idを設定
+        $userDishes = new UserDish();
+        $userDishes->user_id = $userId; // 認証済みユーザーのIDを設定
+        $userDishes->menu_option_id = $menuOptionId; // フォームから送信されたmenu_option_idを設定
 
         // 献立を保存
-        $userDish->save();
+        $userDishes->save();
 
         // user_menu_idを取得
-        $userMenuId = $userDish->user_menu_id; // 保存した後に主キーを取得
+        $userMenuId = $userDishes->user_menu_id; // 保存した後に主キーを取得
 
         // 成功メッセージをセッションに追加
         session()->flash('success', '献立候補が追加されました。');

@@ -44,6 +44,16 @@ class UserDishesController extends Controller
         // menu_option_idを取得（フォームから送信された値）
         $menuOptionId = $request->input('menu_option_id'); // フォームから送信されたmenu_option_idを取得
 
+        // すでに同じ献立候補が存在するか確認
+        $existingDish = UserDishes::where('user_id', $userId)
+        ->where('menu_option_id', $menuOptionId)
+        ->first();
+
+        if ($existingDish) {
+            session()->flash('error', 'この献立候補はすでに追加されています。');
+            return redirect()->route('user.dishes');
+        }
+
         // 新しいユーザー献立を作成
         $userDishes = new UserDishes();
         $userDishes->user_id = $userId; // 認証済みユーザーのIDを設定
@@ -90,8 +100,14 @@ class UserDishesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserDishes $userDishes)
-    {
-        //
+        //ユーザー毎の献立候補から削除する
+        public function destroy($id)
+        {
+            $userDish = UserDishes::findOrFail($id);
+            $userDish->delete();
+
+            session()->flash('success', '献立候補が削除されました。');
+            return redirect()->route('user.dishes');
+        }
     }
-}
+

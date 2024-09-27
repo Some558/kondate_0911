@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu_Options extends Model
 {
-    use HasFactory;
+    protected $table = 'menu__options'; // テーブル名を明示的に指定
 }

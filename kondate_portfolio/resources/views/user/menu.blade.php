@@ -1,3 +1,8 @@
+@php
+use App\Models\UserDishes;
+use App\Models\MenuOptions;
+@endphp
+
 <x-user-layout>
     <!-- resources/views/weekly-menu.blade.php -->
     <!DOCTYPE html>
@@ -24,7 +29,9 @@
                         <div>
                             <h3 class="font-semibold mb-2">メインメニュー</h3>
                             <select name="main_menu" class="w-full p-2 border rounded">
-                                <option>選択式のボックス (main_menuデータベースに保存の物から選択)</option>
+                                @foreach($mainMenus as $mainMenu)
+                                    <option value="{{ $mainMenu->id }}">{{ $mainMenu->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div>

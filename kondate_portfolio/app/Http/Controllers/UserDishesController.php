@@ -101,11 +101,10 @@ class UserDishesController extends Controller
      * Remove the specified resource from storage.
      */
         //ユーザー毎の献立候補から削除する
-        public function destroy($id)
+        public function destroy($userMenuId)
         {
-            $userDish = UserDishes::findOrFail($id);
-            $userDish->delete();
-
+            $userDishes = UserDishes::where('user_menu_id', $userMenuId)->firstOrFail();
+            $userDishes->delete();
             session()->flash('success', '献立候補が削除されました。');
             return redirect()->route('user.dishes');
         }

@@ -21,7 +21,7 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function() {
     // ユーザー毎献立候補新規登録
     Route::post('dishes', [UserDishesController::class, 'store'])->name('dishes.store');
     //ユーザー毎献立候補削除
-    Route::delete('dishes/{id}', [UserDishesController::class, 'destroy'])->name('dishes.destroy');
+    Route::delete('dishes/{userMenuId}', [UserDishesController::class, 'destroy'])->name('dishes.destroy');
 });
 
 Route::get('/dashboard', function () {

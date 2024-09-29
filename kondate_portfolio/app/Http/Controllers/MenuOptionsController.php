@@ -15,7 +15,7 @@ class MenuOptionsController extends Controller
     public function top()
     {
         //献立一覧を取得
-        $menu_options = Menu_Options::get();
+        $menu_options = MenuOptions::get();
         return view('admin.top', [
             'menu_options' => $menu_options
         ]);
@@ -40,7 +40,7 @@ class MenuOptionsController extends Controller
         foreach ($names as $index => $name) {
             // 名前とタイプが空でないことを確認
             if (!empty($name) && !empty($types[$index])) {
-                $menu_options = new Menu_Options();
+                $menu_options = new MenuOptions();
                 $menu_options->dish_name = $name;
                 $menu_options->dish_type = $types[$index];
                 $menu_options->user_id = auth()->id(); // ユーザーIDを設定
@@ -67,7 +67,7 @@ class MenuOptionsController extends Controller
 
     public function edit(Request $request, int $menu_optionId)
         {
-            $menu_option = Menu_Options::findOrFail($menu_optionId);
+            $menu_option = MenuOptions::findOrFail($menu_optionId);
             return view('admin.menu_options.edit', [
                 'menu_option' => $menu_option
             ]);
@@ -79,7 +79,7 @@ class MenuOptionsController extends Controller
     public function update(UpdateMenu_OptionsRequest $request, int $menu_optionId)
     {
         // dd($request);
-        $menu_options = Menu_Options::findOrFail($menu_optionId);
+        $menu_options = MenuOptions::findOrFail($menu_optionId);
         $menu_options->dish_name = $request->name;
         $menu_options->dish_type = $request->type;
         $menu_options->user_id   = auth()->id(); // ユーザーIDを設定
@@ -93,7 +93,7 @@ class MenuOptionsController extends Controller
     public function destroy(Request $request, int $menu_optionId)
     {
         // dd($menu_optionId, $request);
-        $menu_options = Menu_Options::findOrFail($menu_optionId);
+        $menu_options = MenuOptions::findOrFail($menu_optionId);
         $menu_options->delete();
         return redirect()->route('admin.top')->with('success', '献立候補の削除が完了しました。');
     }

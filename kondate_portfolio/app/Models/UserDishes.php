@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserDishes extends Model
 {
-    use HasFactory;
+    protected $table = 'user_dishes';
+    protected $primaryKey = 'user_menu_id';
+    public $incrementing = true;
 }

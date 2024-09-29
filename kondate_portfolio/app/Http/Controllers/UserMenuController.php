@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserMenuRequest;
 use App\Http\Requests\UpdateUserMenuRequest;
+use App\Models\UserDishes;
 use App\Models\UserMenu;
+use App\Models\MenuOptions;
 
 class UserMenuController extends Controller
 {
@@ -13,12 +15,19 @@ class UserMenuController extends Controller
      */
     public function index()
     {
-        //献立表示を取得
-        $usermenu = usermenu::get();
+        // 献立候補を取得
+        $menu_options = MenuOptions::all(); // Menu_Optionsモデルを使用
+        // user_dishesからメインメニューを取得
+        $mainMenus = UserDishes::with('menuOption') // menuOptionは関連するMenuOptionsモデル
+            ->where('user_id', auth()->id()) // 現在のユーザーのIDでフィルタリング
+            ->get();
+
         return view('user.menu', [
-            'usermenu' => $usermenu
+            'menu_options' => $menu_options,
+            'mainMenus' => $mainMenus // 取得したメインメニューをビューに渡す
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

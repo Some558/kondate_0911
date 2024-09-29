@@ -2,7 +2,6 @@
 use App\Models\UserDishes;
 use App\Models\MenuOptions;
 @endphp
-
 <x-user-layout>
     <!-- resources/views/weekly-menu.blade.php -->
     <!DOCTYPE html>
@@ -21,7 +20,10 @@ use App\Models\MenuOptions;
                     <div class="tab w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 cursor-pointer" data-tab="{{ $day }}">{{ $day }}</div>
                 @endforeach
             </div>
-
+            @php
+            // 現在のユーザーのすべての献立候補を取得
+            $userDishes = UserDishes::where('user_id', auth()->id())->get();
+            @endphp
             @foreach(['Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur', 'Sun'] as $day)
                 <div id="{{ $day }}" class="tab-content mt-4 hidden">
                     <h2 class="text-2xl font-bold mb-4">{{ $day }}曜日の献立</h2>
@@ -30,7 +32,7 @@ use App\Models\MenuOptions;
                             <h3 class="font-semibold mb-2">メインメニュー</h3>
                             <select name="main_menu" class="w-full p-2 border rounded">
                                 @foreach($mainMenus as $mainMenu)
-                                    <option value="{{ $mainMenu->id }}">{{ $mainMenu->name }}</option>
+                                    <option value="{{ $mainMenu->menu_option_id }}">{{ $mainMenu->menuOption->dish_name }}</option>
                                 @endforeach
                             </select>
                         </div>

@@ -16,6 +16,8 @@ Route::get('/', function () {
 Route::prefix('user')->name('user.')->middleware('auth')->group(function() {
     // 献立ページ表示
     Route::get('index', [UserMenuController::class, 'index'])->name('index');
+    // 曜日毎献立保存
+    Route::post('menu/keep', [UserMenuController::class, 'keep'])->name('menu.keep');
     // 献立候補登録ページ表示
     Route::get('dishes', [UserDishesController::class, 'index'])->name('dishes');
     // ユーザー毎献立候補新規登録

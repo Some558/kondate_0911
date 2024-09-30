@@ -20,15 +20,13 @@ use App\Models\MenuOptions;
                     <div class="tab w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 cursor-pointer" data-tab="{{ $day }}">{{ $day }}</div>
                 @endforeach
             </div>
-            @php
-            // 現在のユーザーのすべての献立候補を取得
-            $userDishes = UserDishes::where('user_id', auth()->id())->get();
-            @endphp
             @foreach(['Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur', 'Sun'] as $day)
                 <div id="{{ $day }}" class="tab-content mt-4 hidden">
                     <h2 class="text-2xl font-bold mb-4">{{ $day }}曜日の献立</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
+                            <form action="{{ route('user.menu.keep') }}" method="POST">
+                                @csrf
                             <h3 class="font-semibold mb-2">メインメニュー</h3>
                             <select name="main_menu" class="w-full p-2 border rounded">
                                 @foreach($mainMenus as $mainMenu)
@@ -39,18 +37,26 @@ use App\Models\MenuOptions;
                         <div>
                             <h3 class="font-semibold mb-2">サブメニュー1</h3>
                             <select name="sub_menu_1" class="w-full p-2 border rounded">
-                                <option>選択式のボックス (sub_menuデータベースに保存の物から選択)</option>
+                                @foreach($subMenus as $subMenu)
+                                <option value="{{ $subMenu->menu_option_id }}">{{ $subMenu->menuOption->dish_name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div>
                             <h3 class="font-semibold mb-2">サブメニュー2</h3>
                             <select name="sub_menu_2" class="w-full p-2 border rounded">
-                                <option>選択式のボックス (sub_menuデータベースに保存の物から選択)</option>
+                                @foreach($subMenus as $subMenu)
+                                <option value="{{ $subMenu->menu_option_id }}">{{ $subMenu->menuOption->dish_name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="mt-6 flex space-x-4">
-                        <button class="keep bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Keep</button>
+                        <button class="keep bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                            Keep
+                        </button>
+                            </form>
+                        {{-- <button class="keep bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Keep</button> --}}
                         <button class="random bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Random</button>
                         <button class="delete bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Delete</button>
                     </div>

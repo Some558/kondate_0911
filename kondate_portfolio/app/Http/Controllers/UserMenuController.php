@@ -46,34 +46,24 @@ class UserMenuController extends Controller
     $main_menu_id = $request->input('main_menu');
     $sub_menu_1_id = $request->input('sub_menu_1');
     $sub_menu_2_id = $request->input('sub_menu_2');
+    $day_of_week = $request->input('day_of_week'); // 曜日を取得
 
     // menu_optionsから選択されたメニューオプションを取得
     $mainMenu = MenuOptions::find($main_menu_id);
     $subMenu1 = MenuOptions::find($sub_menu_1_id);
     $subMenu2 = MenuOptions::find($sub_menu_2_id);
 
-    // メインメニューとサブメニューを再取得
-    $mainMenus = UserDishes::with('menuOption')
-        ->where('user_id', auth()->id())
-        ->whereHas('menuOption', function($query) {
-            $query->where('dish_type', 'main');
-        })
-        ->get();
+    // ユーザーの献立を保存する処理
+    $userMenu = new UserMenu();
+    $userMenu->user_id = auth()->id(); // 現在のユーザーIDを設定
+    $userMenu->day_of_week = $day_of_week; // 曜日を設定
+    $userMenu->main_dish_id = $main_menu_id; // メインディッシュのIDを設定
+    $userMenu->sub_dish1_id = $sub_menu_1_id; // サブディッシュ1のIDを設定
+    $userMenu->sub_dish2_id = $sub_menu_2_id; // サブディッシュ2のIDを設定
+    $userMenu->save(); // 保存
 
-    $subMenus = UserDishes::with('menuOption')
-        ->where('user_id', auth()->id())
-        ->whereHas('menuOption', function($query) {
-            $query->where('dish_type', 'sub');
-        })
-        ->get();
-
-    return view('user.menu', [
-        'mainMenus' => $mainMenus, // 再取得したメインメニューをビューに渡す
-        'subMenus' => $subMenus, // 再取得したサブメニューをビューに渡す
-        'mainMenu' => $mainMenu, // 選択されたメインメニューをビューに渡す
-        'subMenu1' => $subMenu1, // 選択されたサブメニュー1をビューに渡す
-        'subMenu2' => $subMenu2, // 選択されたサブメニュー2をビューに渡す
-    ]);
+    // 保存後のリダイレクトやメッセージ表示
+    return redirect()->route('user.index')->with('success', '献立が保存されました。');
 }
 
     /**

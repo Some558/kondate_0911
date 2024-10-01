@@ -27,11 +27,16 @@ use App\Models\MenuOptions;
                         <div>
                             <form action="{{ route('user.menu.keep') }}" method="POST">
                                 @csrf
+                                <input type="hidden" name="day_of_week" value="{{ $day }}"> <!-- 曜日を隠しフィールドで送信 -->
                             <h3 class="font-semibold mb-2">メインメニュー</h3>
                             <select name="main_menu" class="w-full p-2 border rounded">
-                                @foreach($mainMenus as $mainMenu)
-                                    <option value="{{ $mainMenu->menu_option_id }}">{{ $mainMenu->menuOption->dish_name }}</option>
-                                @endforeach
+                                @if($mainMenus->isNotEmpty())
+                                    @foreach($mainMenus as $mainMenu)
+                                        <option value="{{ $mainMenu->menu_option_id }}">{{ $mainMenu->menuOption->dish_name }}</option>
+                                    @endforeach
+                                @else
+                                    <option value="">No data available</option>
+                                @endif
                             </select>
                         </div>
                         <div>

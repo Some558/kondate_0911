@@ -64,29 +64,29 @@ use App\Models\MenuOptions;
                         </div>
                         <div>
                             <h3 class="font-semibold mb-2">サブメニュー1</h3>
-                            <div name="sub_menu_1" class="w-full p-2 border rounded">
-                                @if($subMenus->isNotEmpty())
+                            <div name="main_menu" class="w-full p-2 border rounded">
+                                @if($userMenus->isNotEmpty())
                                     @php
-                                        $latestSubDishName1 = null; // 最後のサブメニュー1の料理名を格納する変数
+                                        $latestDishName = null; // 最後の料理名を格納する変数
                                     @endphp
-                                    @foreach($subMenus as $subMenu)
-                                        @if($subMenu->day_of_week == $day && $subMenu->type == 'sub' && $subMenu->order == 1)
+                                    @foreach($userMenus as $userMenu)
+                                        @if($userMenu->day_of_week == $day)
                                             @php
                                                 // 最新のuserDishを取得
-                                                $latestUserSubDish1 = UserDishes::where('menu_option_id', $subMenu->menu_option_id)
+                                                $latestUserDish = UserDishes::where('menu_option_id', $userMenu->sub_dish1_id)
                                                     ->where('user_id', auth()->id())
                                                     ->latest() // 最新のレコードを取得
                                                     ->first(); // 最初の1件を取得
                                             @endphp
-                                            @if($latestUserSubDish1)
+                                            @if($latestUserDish)
                                                 @php
-                                                    $latestSubDishName1 = $latestUserSubDish1->menuOption ? $latestUserSubDish1->menuOption->dish_name : null; // 料理名を格納
+                                                    $latestDishName = $latestUserDish->menuOption ? $latestUserDish->menuOption->dish_name : null; // 料理名を格納
                                                 @endphp
                                             @endif
                                         @endif
                                     @endforeach
-                                    @if($latestSubDishName1)
-                                        <p>{{ $latestSubDishName1 }}</p> <!-- 最後のサブメニュー1の料理名を表示 -->
+                                    @if($latestDishName)
+                                        <p>{{ $latestDishName }}</p> <!-- 最後の料理名を表示 -->
                                     @else
                                         <p>No dish available</p>
                                     @endif
@@ -97,29 +97,29 @@ use App\Models\MenuOptions;
                         </div>
                         <div>
                             <h3 class="font-semibold mb-2">サブメニュー2</h3>
-                            <div name="sub_menu_2" class="w-full p-2 border rounded">
-                                @if($subMenus->isNotEmpty())
+                            <div name="main_menu" class="w-full p-2 border rounded">
+                                @if($userMenus->isNotEmpty())
                                     @php
-                                        $latestSubDishName2 = null; // 最後のサブメニュー2の料理名を格納する変数
+                                        $latestDishName = null; // 最後の料理名を格納する変数
                                     @endphp
-                                    @foreach($subMenus as $subMenu)
-                                        @if($subMenu->day_of_week == $day && $subMenu->type == 'sub' && $subMenu->order == 2)
+                                    @foreach($userMenus as $userMenu)
+                                        @if($userMenu->day_of_week == $day)
                                             @php
                                                 // 最新のuserDishを取得
-                                                $latestUserSubDish2 = UserDishes::where('menu_option_id', $subMenu->menu_option_id)
+                                                $latestUserDish = UserDishes::where('menu_option_id', $userMenu->sub_dish2_id)
                                                     ->where('user_id', auth()->id())
                                                     ->latest() // 最新のレコードを取得
                                                     ->first(); // 最初の1件を取得
                                             @endphp
-                                            @if($latestUserSubDish2)
+                                            @if($latestUserDish)
                                                 @php
-                                                    $latestSubDishName2 = $latestUserSubDish2->menuOption ? $latestUserSubDish2->menuOption->dish_name : null; // 料理名を格納
+                                                    $latestDishName = $latestUserDish->menuOption ? $latestUserDish->menuOption->dish_name : null; // 料理名を格納
                                                 @endphp
                                             @endif
                                         @endif
                                     @endforeach
-                                    @if($latestSubDishName2)
-                                        <p>{{ $latestSubDishName2 }}</p> <!-- 最後のサブメニュー2の料理名を表示 -->
+                                    @if($latestDishName)
+                                        <p>{{ $latestDishName }}</p> <!-- 最後の料理名を表示 -->
                                     @else
                                         <p>No dish available</p>
                                     @endif

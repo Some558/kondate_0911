@@ -10,7 +10,7 @@ class UserDishes extends Model
     use HasFactory; // 追加: ファクトリを使用する場合
 
     protected $table = 'user_dishes';
-    protected $primaryKey = 'user_menu_id';
+    protected $primaryKey = 'id';
     public $incrementing = true;
 
     // リレーションの定義

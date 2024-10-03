@@ -17,7 +17,9 @@ use App\Models\MenuOptions;
         <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
             <div id="tabs" class="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
                 @foreach(['Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur', 'Sun'] as $day)
-                    <div class="tab w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 cursor-pointer" data-tab="{{ $day }}">{{ $day }}</div>
+                    <div class="tab w-full rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 cursor-pointer" data-tab="{{ $day }}">
+                        {{ $day }}
+                    </div>
                 @endforeach
             </div>
             @foreach(['Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur', 'Sun'] as $day)
@@ -28,22 +30,126 @@ use App\Models\MenuOptions;
                             <form action="{{ route('user.menu.keep') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="day_of_week" value="{{ $day }}"> <!-- 曜日を隠しフィールドで送信 -->
-                            <h3 class="font-semibold mb-2">メインメニュー</h3>
-                            <select name="main_menu" class="w-full p-2 border rounded">
-                                @if($mainMenus->isNotEmpty())
-                                    @foreach($mainMenus as $mainMenu)
-                                        <option value="{{ $mainMenu->menu_option_id }}">{{ $mainMenu->menuOption->dish_name }}</option>
+                                <h3 class="font-semibold mb-2">メインメニュー</h3>
+                                <div name="main_menu" class="w-full p-2 border rounded">
+                                    @if($userMenus->isNotEmpty())
+                                        @php
+                                            $latestDishName = null; // 最後の料理名を格納する変数
+                                        @endphp
+                                        @foreach($userMenus as $userMenu)
+                                            @if($userMenu->day_of_week == $day)
+                                                @php
+                                                    // 最新のuserDishを取得
+                                                    $latestUserDish = UserDishes::where('menu_option_id', $userMenu->main_dish_id)
+                                                        ->where('user_id', auth()->id())
+                                                        ->latest() // 最新のレコードを取得
+                                                        ->first(); // 最初の1件を取得
+                                                @endphp
+                                                @if($latestUserDish)
+                                                    @php
+                                                        $latestDishName = $latestUserDish->menuOption ? $latestUserDish->menuOption->dish_name : null; // 料理名を格納
+                                                    @endphp
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        @if($latestDishName)
+                                            <p>{{ $latestDishName }}</p> <!-- 最後の料理名を表示 -->
+                                        @else
+                                            <p>No dish available</p>
+                                        @endif
+                                    @else
+                                        <p>No data available</p>
+                                    @endif
+                                </div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">サブメニュー1</h3>
+                            <div name="sub_menu_1" class="w-full p-2 border rounded">
+                                @if($subMenus->isNotEmpty())
+                                    @php
+                                        $latestSubDishName1 = null; // 最後のサブメニュー1の料理名を格納する変数
+                                    @endphp
+                                    @foreach($subMenus as $subMenu)
+                                        @if($subMenu->day_of_week == $day && $subMenu->type == 'sub' && $subMenu->order == 1)
+                                            @php
+                                                // 最新のuserDishを取得
+                                                $latestUserSubDish1 = UserDishes::where('menu_option_id', $subMenu->menu_option_id)
+                                                    ->where('user_id', auth()->id())
+                                                    ->latest() // 最新のレコードを取得
+                                                    ->first(); // 最初の1件を取得
+                                            @endphp
+                                            @if($latestUserSubDish1)
+                                                @php
+                                                    $latestSubDishName1 = $latestUserSubDish1->menuOption ? $latestUserSubDish1->menuOption->dish_name : null; // 料理名を格納
+                                                @endphp
+                                            @endif
+                                        @endif
                                     @endforeach
+                                    @if($latestSubDishName1)
+                                        <p>{{ $latestSubDishName1 }}</p> <!-- 最後のサブメニュー1の料理名を表示 -->
+                                    @else
+                                        <p>No dish available</p>
+                                    @endif
                                 @else
-                                    <option value="">No data available</option>
+                                    <p>No data available</p>
                                 @endif
-                            </select>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2">サブメニュー2</h3>
+                            <div name="sub_menu_2" class="w-full p-2 border rounded">
+                                @if($subMenus->isNotEmpty())
+                                    @php
+                                        $latestSubDishName2 = null; // 最後のサブメニュー2の料理名を格納する変数
+                                    @endphp
+                                    @foreach($subMenus as $subMenu)
+                                        @if($subMenu->day_of_week == $day && $subMenu->type == 'sub' && $subMenu->order == 2)
+                                            @php
+                                                // 最新のuserDishを取得
+                                                $latestUserSubDish2 = UserDishes::where('menu_option_id', $subMenu->menu_option_id)
+                                                    ->where('user_id', auth()->id())
+                                                    ->latest() // 最新のレコードを取得
+                                                    ->first(); // 最初の1件を取得
+                                            @endphp
+                                            @if($latestUserSubDish2)
+                                                @php
+                                                    $latestSubDishName2 = $latestUserSubDish2->menuOption ? $latestUserSubDish2->menuOption->dish_name : null; // 料理名を格納
+                                                @endphp
+                                            @endif
+                                        @endif
+                                    @endforeach
+                                    @if($latestSubDishName2)
+                                        <p>{{ $latestSubDishName2 }}</p> <!-- 最後のサブメニュー2の料理名を表示 -->
+                                    @else
+                                        <p>No dish available</p>
+                                    @endif
+                                @else
+                                    <p>No data available</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <form action="{{ route('user.menu.keep') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="day_of_week" value="{{ $day }}"> <!-- 曜日を隠しフィールドで送信 -->
+                                <h3 class="font-semibold mb-2">メインメニュー</h3>
+                                <select name="main_menu" class="w-full p-2 border rounded">
+                                    @if($mainMenus->isNotEmpty())
+                                        @foreach($mainMenus as $mainMenu)
+                                            <option value="{{ $mainMenu->menu_option_id }}">{{ $mainMenu->menuOption->dish_name }}</option>
+                                        @endforeach
+                                    @else
+                                        <option value="">No data available</option>
+                                    @endif
+                                </select>
                         </div>
                         <div>
                             <h3 class="font-semibold mb-2">サブメニュー1</h3>
                             <select name="sub_menu_1" class="w-full p-2 border rounded">
                                 @foreach($subMenus as $subMenu)
-                                <option value="{{ $subMenu->menu_option_id }}">{{ $subMenu->menuOption->dish_name }}</option>
+                                    <option value="{{ $subMenu->menu_option_id }}">{{ $subMenu->menuOption->dish_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -51,7 +157,7 @@ use App\Models\MenuOptions;
                             <h3 class="font-semibold mb-2">サブメニュー2</h3>
                             <select name="sub_menu_2" class="w-full p-2 border rounded">
                                 @foreach($subMenus as $subMenu)
-                                <option value="{{ $subMenu->menu_option_id }}">{{ $subMenu->menuOption->dish_name }}</option>
+                                    <option value="{{ $subMenu->menu_option_id }}">{{ $subMenu->menuOption->dish_name }}</option>
                                 @endforeach
                             </select>
                         </div>

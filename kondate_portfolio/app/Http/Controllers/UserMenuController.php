@@ -34,10 +34,16 @@ class UserMenuController extends Controller
             })
             ->get();
 
+        // 現在のユーザーの献立を取得
+        $userMenus = UserMenu::where('user_id', auth()->id())->get();
+        $userDishes = UserDishes::where('user_id', auth()->id())->get();
+
         return view('user.menu', [
             'menu_options' => $menu_options,
             'mainMenus' => $mainMenus, // 取得したメインメニューをビューに渡す
-            'subMenus' => $subMenus // 取得したサブメニューをビューに渡す
+            'subMenus' => $subMenus, // 取得したサブメニューをビューに渡す
+            'userMenus' => $userMenus, // 取得した献立データをビューに渡す
+            'userDishes' => $userDishes // 取得した献立データをビューに渡す
         ]);
     }
     public function keep(Request $request)

@@ -167,8 +167,17 @@ use App\Models\MenuOptions;
                             Keep
                         </button>
                     </form>
-                        <button class="random bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Random</button>
-                        <button class="delete bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Delete</button>
+                    <form action="{{ route('user.menu.randomkeep') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="day_of_week" value="{{ $day }}"> <!-- 現在の曜日を設定 -->
+                        <button type="submit" class="random bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                            Random
+                        </button>
+                    </form>
+                        </form>
+                        <button class="delete bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                            Delete
+                        </button>
                     </div>
                 </div>
             @endforeach
@@ -177,7 +186,6 @@ use App\Models\MenuOptions;
                 <button id="week-random" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">1week_Random</button>
             </div>
         </div>
-
         <script>
             $(document).ready(function() {
                 $('.tab-content:first').removeClass('hidden');

@@ -105,6 +105,34 @@ class UserMenuController extends Controller
         // return redirect()->route('user.index'); // 適切なルートにリダイレクト
     }
 
+    public function randomKeep(Request $request)
+    {
+        // 曜日をリクエストから取得
+        $day_of_week = $request->input('day_of_week'); // リクエストから曜日を取得
+
+        // ランダムにメニューを取得
+        $mainMenuRandom = UserDishes::inRandomOrder()->first();
+        $subMenu1Random = UserDishes::inRandomOrder()->first();
+        $subMenu2Random = UserDishes::inRandomOrder()->first();
+
+        // メニューが取得できているか確認
+        if (!$mainMenuRandom || !$subMenu1Random || !$subMenu2Random) {
+            return redirect()->route('user.index')->with('error', 'メニューが見つかりませんでした。');
+        }
+
+        // ユーザーの献立を保存する処理
+        $userMenu = new UserMenu();
+        $userMenu->user_id = auth()->id(); // 現在のユーザーIDを設定
+        $userMenu->day_of_week = $day_of_week; // 曜日を設定
+        $userMenu->main_dish_id = $mainMenuRandom->user_menu_id; // メインディッシュのIDを設定
+        $userMenu->sub_dish1_id = $subMenu1Random->user_menu_id; // サブディッシュ1のIDを設定
+        $userMenu->sub_dish2_id = $subMenu2Random->user_menu_id; // サブディッシュ2のIDを設定
+        $userMenu->save(); // 保存
+
+        // 保存後のリダイレクトやメッセージ表示
+        return redirect()->route('user.index')->with('success', '献立が保存されました。');
+    }
+
     /**
      * Display the specified resource.
      */

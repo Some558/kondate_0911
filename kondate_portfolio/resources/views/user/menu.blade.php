@@ -166,8 +166,7 @@ use App\Models\MenuOptions;
                         <button class="keep bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
                             Keep
                         </button>
-                            </form>
-                        {{-- <button class="keep bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Keep</button> --}}
+                    </form>
                         <button class="random bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Random</button>
                         <button class="delete bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Delete</button>
                     </div>

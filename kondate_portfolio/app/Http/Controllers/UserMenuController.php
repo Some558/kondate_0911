@@ -171,7 +171,7 @@ class UserMenuController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(UserMenu $userMenu)
+    public function destroy(Request $request)
     {
         //
     }

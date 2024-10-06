@@ -110,10 +110,21 @@ class UserMenuController extends Controller
         // 曜日をリクエストから取得
         $day_of_week = $request->input('day_of_week'); // リクエストから曜日を取得
 
-        // ランダムにメニューを取得
-        $mainMenuRandom = UserDishes::inRandomOrder()->first();
-        $subMenu1Random = UserDishes::inRandomOrder()->first();
-        $subMenu2Random = UserDishes::inRandomOrder()->first();
+        // ランダムにメインメニューを取得
+        $mainMenuRandom = UserDishes::whereHas('menuOption', function($query) {
+            $query->where('dish_type', 'main'); // dish_typeが'main'のものをフィルタリング
+        })->inRandomOrder()->first();
+
+        // ランダムにサブメニュー1を取得
+        $subMenu1Random = UserDishes::whereHas('menuOption', function($query) {
+            $query->where('dish_type', 'sub'); // dish_typeが'sub'のものをフィルタリング
+        })->inRandomOrder()->first();
+
+        // ランダムにサブメニュー2を取得（サブメニュー1と重複しないように）
+        $subMenu2Random = UserDishes::whereHas('menuOption', function($query) {
+            $query->where('dish_type', 'sub'); // dish_typeが'sub'のものをフィルタリング
+        })->where('menu_option_id', '!=', $subMenu1Random->menu_option_id) // サブメニュー1のIDを除外
+        ->inRandomOrder()->first();
 
         // メニューが取得できているか確認
         if (!$mainMenuRandom || !$subMenu1Random || !$subMenu2Random) {
@@ -124,9 +135,9 @@ class UserMenuController extends Controller
         $userMenu = new UserMenu();
         $userMenu->user_id = auth()->id(); // 現在のユーザーIDを設定
         $userMenu->day_of_week = $day_of_week; // 曜日を設定
-        $userMenu->main_dish_id = $mainMenuRandom->user_menu_id; // メインディッシュのIDを設定
-        $userMenu->sub_dish1_id = $subMenu1Random->user_menu_id; // サブディッシュ1のIDを設定
-        $userMenu->sub_dish2_id = $subMenu2Random->user_menu_id; // サブディッシュ2のIDを設定
+        $userMenu->main_dish_id = $mainMenuRandom->menu_option_id; // メインディッシュのIDを設定
+        $userMenu->sub_dish1_id = $subMenu1Random->menu_option_id; // サブディッシュ1のIDを設定
+        $userMenu->sub_dish2_id = $subMenu2Random->menu_option_id; // サブディッシュ2のIDを設定
         $userMenu->save(); // 保存
 
         // 保存後のリダイレクトやメッセージ表示

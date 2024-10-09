@@ -103,11 +103,11 @@ use App\Models\MenuOptions;
                                 <button type="submit" class="keep flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
                                     <i class="fas fa-save mr-2"></i>選択したメニューを保存
                                 </button>
-
+                            </form>
                             <form action="{{ route('user.menu.randomkeep') }}" method="POST">
                                 @csrf
                                 <button type="submit" input type="hidden" name="day_of_week" value="{{ $day }}" class="random flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
-                                    <i class="fas fa-random mr-2"></i>ランダムに選択
+                                    <i class="fas fa-random mr-2"></i>ランダムに保存
                                 </button>
                             </form>
                             </div>

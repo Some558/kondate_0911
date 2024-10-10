@@ -104,12 +104,14 @@ use App\Models\MenuOptions;
                                     <i class="fas fa-save mr-2"></i>選択したメニューを保存
                                 </button>
                             </form>
-                            <form action="{{ route('user.menu.randomkeep') }}" method="POST">
-                                @csrf
-                                <button type="submit" input type="hidden" name="day_of_week" value="{{ $day }}" class="random flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
-                                    <i class="fas fa-random mr-2"></i>ランダムに保存
-                                </button>
-                            </form>
+                                <!-- ランダムに保存 -->
+                                <form action="{{ route('user.menu.randomkeep') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="day_of_week" value="{{ $day }}">
+                                    <button type="submit" class="random flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                                        <i class="fas fa-random mr-2"></i>ランダムに保存
+                                    </button>
+                                </form>
                             </div>
                     </div>
                 </div>
@@ -129,19 +131,22 @@ use App\Models\MenuOptions;
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('.tab-content:first').removeClass('hidden');
-            $('.tab:first').addClass('bg-white shadow');
+            var activeTab = '{{ session('active_tab', 'Mon') }}';
 
+            // タブとコンテンツの初期化
+            $('.tab-content').addClass('hidden');
+            $('#' + activeTab).removeClass('hidden');
+
+            $('.tab').removeClass('bg-white shadow');
+            $('.tab[data-tab="' + activeTab + '"]').addClass('bg-white shadow');
+
+            // タブクリック時のイベント
             $('.tab').click(function() {
                 var tab = $(this).data('tab');
                 $('.tab-content').addClass('hidden');
                 $('#' + tab).removeClass('hidden');
                 $('.tab').removeClass('bg-white shadow');
                 $(this).addClass('bg-white shadow');
-            });
-
-            $('.keep, .random, #week-random').click(function() {
-                alert($(this).text() + ' button clicked');
             });
         });
     </script>

@@ -6,7 +6,7 @@ use App\Models\MenuOptions;
     <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h1 class="text-4xl font-bold text-gray-900 mb-2">週間メニュープランナー</h1>
+                <h1 class="text-4xl font-bold text-gray-900 mb-2">今週の献立</h1>
                 <p class="text-gray-600">1週間の献立を簡単に計画できます</p>
             </div>
 
@@ -25,7 +25,7 @@ use App\Models\MenuOptions;
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                         <!-- 現在のメニュー表示部分 -->
                         <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
-                            <h2 class="text-2xl font-bold mb-4">{{ $day }}曜日の現在の献立</h2>
+                            <h2 class="text-2xl font-bold mb-4">{{ $day }}dayの献立</h2>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 @php
                                     $mealTypes = [

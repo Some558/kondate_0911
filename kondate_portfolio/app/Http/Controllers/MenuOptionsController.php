@@ -50,7 +50,7 @@ class MenuOptionsController extends Controller
         // 保存成功後のメッセージをセッションに格納
         session()->flash('success', '献立候補の新規登録が完了しました。');
         // 保存成功後のメッセージをセッションに格納
-        return redirect()->route('admin.top')->with('success', '献立候補の新規登録が完了しました。');
+        return back()->with('success', '献立候補の新規登録が完了しました。');
     }
 
     /**

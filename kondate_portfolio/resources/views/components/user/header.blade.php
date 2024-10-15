@@ -10,6 +10,12 @@
         class="flex ml-auto text-white bg-gray-700 border-0 py-1.5 px-4 focus:outline-none hover:bg-gray-900 rounded">
             献立候補登録
         </button>
+        <button
+        {{-- 献立編集画面に遷移 --}}
+        onclick="location.href='{{ route('admin.top') }}'"
+        class="flex ml-auto text-white bg-gray-700 border-0 py-1.5 px-4 focus:outline-none hover:bg-gray-900 rounded">
+            献立候補一覧編集
+        </button>
         <form method="POST" action="{{ route('logout') }}" class='md:ml-auto'>
             @csrf
             <button

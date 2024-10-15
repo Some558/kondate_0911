@@ -55,7 +55,7 @@ use App\Models\UserDishes;
 
         <div class="flex justify-between items-center mb-4">
             <div class="mb-4">
-                <h1 class="text-2xl font-bold text-gray-800">献立候補を一覧から追加・削除する</h1>
+                <h1 class="text-2xl font-bold text-gray-800">マイ献立を追加・削除する</h1>
             </div>
             <a href="{{ route('user.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                 献立選択画面に戻る

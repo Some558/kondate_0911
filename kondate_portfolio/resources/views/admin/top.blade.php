@@ -7,7 +7,7 @@
     <section class="text-gray-600 body-font relative">
         <div class="container px-5 py-12 mx-auto">
             <div class="flex flex-col text-center w-full mb-12">
-                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">献立候補を登録してください</h1>
+                <h1 class="sm:text-3xl text-3xl font-bold title-font mb-4 text-gray-900">献立候補を登録してください</h1>
             </div>
             <div class="p-2 w-full">
                 <button
@@ -18,6 +18,9 @@
             </div>
         </div>
     </section>
+    <div class="text-center">
+        <h2 class="text-3xl font-bold">献立候補一覧</h2>
+    </div>
     <section class="text-gray-600 body-font">
         <div class="container px-5 py-12 mx-auto">
             <div class="flex flex-wrap -mx-4">
@@ -30,7 +33,6 @@
                         <table class="table-auto w-full text-left whitespace-no-wrap mb-8">
                             <thead>
                                 <tr>
-                                    <th class="px-4 py-3 bg-gray-100">ID</th>
                                     <th class="px-4 py-3 bg-gray-100">献立名</th>
                                     <th class="px-4 py-3 bg-gray-100">編集</th>
                                     <th class="px-4 py-3 bg-gray-100">削除</th>
@@ -39,7 +41,6 @@
                             <tbody>
                                 @foreach ($menu_options->where('dish_type', 'main') as $menu_option)
                                 <tr class="border-b">
-                                    <td class="px-4 py-3">{{ $menu_option->id }}</td>
                                     <td class="px-4 py-3">{{ $menu_option->dish_name }}</td>
                                     <td class="px-4 py-3">
                                         <button
@@ -71,7 +72,6 @@
                         <table class="table-auto w-full text-left whitespace-no-wrap mb-8">
                             <thead>
                                 <tr>
-                                    <th class="px-4 py-3 bg-gray-100">ID</th>
                                     <th class="px-4 py-3 bg-gray-100">献立名</th>
                                     <th class="px-4 py-3 bg-gray-100">編集</th>
                                     <th class="px-4 py-3 bg-gray-100">削除</th>
@@ -80,7 +80,6 @@
                             <tbody>
                                 @foreach ($menu_options->where('dish_type', 'sub') as $menu_option)
                                 <tr class="border-b">
-                                    <td class="px-4 py-3">{{ $menu_option->id }}</td>
                                     <td class="px-4 py-3">{{ $menu_option->dish_name }}</td>
                                     <td class="px-4 py-3">
                                         <button

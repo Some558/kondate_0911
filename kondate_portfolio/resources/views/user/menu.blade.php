@@ -65,7 +65,7 @@ use App\Models\MenuOptions;
 
                             <div class="mb-6">
                                 <h2 class="text-2xl font-bold text-gray-900 mb-4">新しいメニューを選択</h2>
-                                <p class="text-gray-600 mb-4">お好みのメニューを選択するか、ランダムに生成できます。</p>
+                                <p class="text-gray-600 mb-4">お好みのメニューを選択するか、ランダムに生成できます。<br>※マイ献立で選択した物だけが選択可能</p>
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -8,12 +8,12 @@
             <button
                 onclick="location.href='{{ route('user.dishes') }}'"
                 class="mr-5 hover:text-gray-300">
-                献立候補登録
+                マイ献立追加・削除
             </button>
             <button
                 onclick="location.href='{{ route('admin.top') }}'"
                 class="mr-5 hover:text-gray-300">
-                献立候補一覧編集
+                献立候補編集
             </button>
             <form method="POST" action="{{ route('logout') }}" class="inline">
                 @csrf

@@ -2,7 +2,7 @@
     <section class="text-gray-600 body-font relative">
         <div class="container px-5 py-10 mx-auto">
             <div class="flex flex-col text-center w-full mb-6">
-                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">献立新規登録</h1>
+                <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">献立候補新規登録</h1>
             </div>
             <form method="POST" action="{{ route('admin.menu_options.store')}}">
                 @csrf

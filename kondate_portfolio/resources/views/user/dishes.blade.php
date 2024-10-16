@@ -1,9 +1,4 @@
-@php
-use App\Models\UserDishes;
-@endphp
-
 <x-user-layout>
-
     @if (session('success'))
         <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-2 mb-3 text-xs" role="alert">
             <p class="font-bold">成功</p>
@@ -52,46 +47,50 @@ use App\Models\UserDishes;
             </div>
         </form>
     </div>
-
+    <div class="container mx-auto px-4 py-6">
         <div class="flex justify-between items-center mb-4">
-            <div class="mb-4">
-                <h1 class="text-2xl font-bold text-gray-800">マイ献立を追加・削除する</h1>
-            </div>
+            <h1 class="text-2xl font-bold text-gray-800">献立候補を選択してください</h1>
             <a href="{{ route('user.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                 献立選択画面に戻る
             </a>
         </div>
 
-        @if (session('success'))
-            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-2 mb-3 text-xs" role="alert">
-                <p class="font-bold">成功</p>
-                <p>{{ session('success') }}</p>
-            </div>
-        @endif
+        <form method="POST" action="{{ route('user.dishes.bulkStore') }}">
+            @csrf
 
-        @if (session('error'))
-            <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-2 mb-3 text-xs" role="alert">
-                <p class="font-bold">エラー</p>
-                <p>{{ session('error') }}</p>
+            <div class="mb-4">
+                <h2 class="text-lg font-semibold mb-2 text-gray-700">メインメニュー</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    @foreach ($menu_options->where('dish_type', 'main') as $menu_option)
+                        <div class="border rounded-lg p-4 flex flex-col items-start">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" name="menu_option_ids[]" value="{{ $menu_option->id }}" class="form-checkbox h-5 w-5 text-blue-600">
+                                <span class="ml-2 text-gray-700">{{ $menu_option->dish_name }}</span>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
             </div>
-        @endif
 
-        <div class="mb-4">
-            <h2 class="text-lg font-semibold mb-2 text-gray-700">メインメニュー</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-                @foreach ($menu_options->where('dish_type', 'main') as $menu_option)
-                    @include('user.components.dish-card', ['menu_option' => $menu_option])
-                @endforeach
+            <div class="mb-4">
+                <h2 class="text-lg font-semibold mb-2 text-gray-700">サブメニュー</h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    @foreach ($menu_options->where('dish_type', 'sub') as $menu_option)
+                        <div class="border rounded-lg p-4 flex flex-col items-start">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" name="menu_option_ids[]" value="{{ $menu_option->id }}" class="form-checkbox h-5 w-5 text-blue-600">
+                                <span class="ml-2 text-gray-700">{{ $menu_option->dish_name }}</span>
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
             </div>
-        </div>
 
-        <div class="mb-4">
-            <h2 class="text-lg font-semibold mb-2 text-gray-700">サブメニュー</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-                @foreach ($menu_options->where('dish_type', 'sub') as $menu_option)
-                    @include('user.components.dish-card', ['menu_option' => $menu_option])
-                @endforeach
+            <div class="text-center mt-6">
+                <button type="submit" class="text-white bg-green-500 hover:bg-green-600 py-2 px-8 rounded-lg text-lg">
+                    選択した献立を保存
+                </button>
             </div>
-        </div>
+        </form>
     </div>
 </x-user-layout>

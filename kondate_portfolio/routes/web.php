@@ -24,6 +24,8 @@ Route::prefix('user')->name('user.')->middleware('auth')->group(function() {
     Route::get('dishes', [UserDishesController::class, 'index'])->name('dishes');
     // ユーザー毎献立候補新規登録
     Route::post('dishes', [UserDishesController::class, 'store'])->name('dishes.store');
+    // ユーザー毎献立まとめて保存
+    Route::post('dishes/bulkstore', [UserDishesController::class, 'bulkStore'])->name('dishes.bulkStore');
     //ユーザー毎献立候補削除
     Route::delete('dishes/{userMenuId}', [UserDishesController::class, 'destroy'])->name('dishes.destroy');
 });

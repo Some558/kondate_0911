@@ -12,6 +12,7 @@ class UserDishes extends Model
     protected $table = 'user_dishes';
     protected $primaryKey = 'user_menu_id'; // 主キーを 'user_menu_id' に設定
     public $incrementing = true;
+    protected $fillable = ['user_id', 'menu_option_id'];
 
     // リレーションの定義
     public function menuOption()

@@ -108,5 +108,38 @@ class UserDishesController extends Controller
             session()->flash('success', '献立候補が削除されました。');
             return redirect()->route('user.dishes');
         }
+    /**
+     * 献立をまとめて保存する
+     */
+    public function bulkStore(Request $request)
+    {
+        $userId = auth()->id();
+        $menuOptionIds = $request->input('menu_option_ids', []);
+
+        if (empty($menuOptionIds)) {
+            return redirect()->route('user.dishes')->with('error', '献立が選択されていません。');
+        }
+
+        // 既に存在する献立を除外
+        $existingDishes = UserDishes::where('user_id', $userId)
+            ->whereIn('menu_option_id', $menuOptionIds)
+            ->pluck('menu_option_id')
+            ->toArray();
+
+        $newMenuOptionIds = array_diff($menuOptionIds, $existingDishes);
+
+        // 新しい献立を保存
+        foreach ($newMenuOptionIds as $menuOptionId) {
+            UserDishes::create([
+                'user_id' => $userId,
+                'menu_option_id' => $menuOptionId,
+            ]);
+        }
+
+        return redirect()->route('user.dishes')->with('success', '選択した献立が保存されました。');
     }
+}
+
+
+
 

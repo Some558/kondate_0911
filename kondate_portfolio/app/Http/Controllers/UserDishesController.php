@@ -15,14 +15,19 @@ class UserDishesController extends Controller
      */
     public function index()
     {
-        //献立候補を取得
-        $menu_options = MenuOptions::all(); // Menu_Optionsモデルを使用
+        // 献立候補を取得
+        $menu_options = MenuOptions::all(); // MenuOptionsモデルを使用
+
+        // ユーザーが保存している献立のIDを取得
+        $userDishIds = UserDishes::where('user_id', auth()->id())
+            ->pluck('menu_option_id')
+            ->toArray();
+
         return view('user.dishes', [
-            'menu_options' => $menu_options
+            'menu_options' => $menu_options,
+            'userDishIds' => $userDishIds, // 追加
         ]);
     }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -37,8 +42,8 @@ class UserDishesController extends Controller
      */
     public function store(StoreUserDishesRequest $request)
     {
-        //ユーザー毎献立候補新規登録
-        //ユーザーIDを取得（認証済みユーザー）
+        // ユーザー毎献立候補新規登録
+        // ユーザーIDを取得（認証済みユーザー）
         $userId = auth()->id();
 
         // menu_option_idを取得（フォームから送信された値）
@@ -46,8 +51,8 @@ class UserDishesController extends Controller
 
         // すでに同じ献立候補が存在するか確認
         $existingDish = UserDishes::where('user_id', $userId)
-        ->where('menu_option_id', $menuOptionId)
-        ->first();
+            ->where('menu_option_id', $menuOptionId)
+            ->first();
 
         if ($existingDish) {
             session()->flash('error', 'この献立候補はすでに追加されています。');
@@ -70,7 +75,6 @@ class UserDishesController extends Controller
 
         // リダイレクト（例: 献立一覧ページ）
         return redirect()->route('user.dishes'); // 適切なルートにリダイレクト
-
     }
 
     /**
@@ -100,14 +104,15 @@ class UserDishesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-        //ユーザー毎の献立候補から削除する
-        public function destroy($userMenuId)
-        {
-            $userDishes = UserDishes::where('user_menu_id', $userMenuId)->firstOrFail();
-            $userDishes->delete();
-            session()->flash('success', '献立候補が削除されました。');
-            return redirect()->route('user.dishes');
-        }
+    // ユーザー毎の献立候補から削除する
+    public function destroy($userMenuId)
+    {
+        $userDishes = UserDishes::where('user_menu_id', $userMenuId)->firstOrFail();
+        $userDishes->delete();
+        session()->flash('success', '献立候補が削除されました。');
+        return redirect()->route('user.dishes');
+    }
+
     /**
      * 献立をまとめて保存する
      */
@@ -138,8 +143,26 @@ class UserDishesController extends Controller
 
         return redirect()->route('user.dishes')->with('success', '選択した献立が保存されました。');
     }
+
+    /**
+     * 献立をまとめて削除する
+     */
+    public function bulkDelete(Request $request)
+    {
+        $userId = auth()->id();
+        $menuOptionIds = $request->input('menu_option_ids', []);
+
+        if (empty($menuOptionIds)) {
+            return redirect()->route('user.dishes')->with('error', '献立が選択されていません。');
+        }
+
+        // 献立を削除
+        UserDishes::where('user_id', $userId)
+            ->whereIn('menu_option_id', $menuOptionIds)
+            ->delete();
+
+        session()->flash('success', '選択した献立が削除されました。');
+
+        return redirect()->route('user.dishes');
+    }
 }
-
-
-
-

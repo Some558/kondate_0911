@@ -12,7 +12,9 @@
             <p>{{ session('error') }}</p>
         </div>
     @endif
+
     <div class="container mx-auto px-4 py-6">
+        <!-- 献立候補を手動で追加するセクション -->
         <div class="mb-4">
             <h1 class="text-2xl font-bold text-gray-800">献立候補を手動で追加する</h1>
         </div>
@@ -47,10 +49,13 @@
             </div>
         </form>
     </div>
+
     <div class="container mx-auto px-4 py-6">
+        <!-- 献立候補を選択するセクション -->
         <div class="flex justify-between items-center mb-4">
-            <h1 class="text-2xl font-bold text-gray-800">献立候補を選択してください</h1>
-            <a href="{{ route('user.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            <h1 class="text-2xl font-bold text-gray-800">献立候補からマイ献立を選択してください</h1>
+            <p>チェックボックスにチェックを入れた後、保存して下さい。</p>
+            <a href="{{ route('user.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                 献立選択画面に戻る
             </a>
         </div>
@@ -58,37 +63,67 @@
         <form method="POST" action="{{ route('user.dishes.bulkStore') }}">
             @csrf
 
+            @php
+                // 日本語のあいうえお順にソートするための関数を定義
+                function sortByJapanese($collection) {
+                    return $collection->sort(function($a, $b) {
+                        $collator = new \Collator('ja_JP');
+                        return $collator->compare($a->dish_name, $b->dish_name);
+                    });
+                }
+
+                // メインメニューをソート
+                $main_menu_options = sortByJapanese($menu_options->where('dish_type', 'main'));
+
+                // サブメニューをソート
+                $sub_menu_options = sortByJapanese($menu_options->where('dish_type', 'sub'));
+            @endphp
+
+            <!-- メインメニュー -->
             <div class="mb-4">
                 <h2 class="text-lg font-semibold mb-2 text-gray-700">メインメニュー</h2>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    @foreach ($menu_options->where('dish_type', 'main') as $menu_option)
+                    @foreach ($main_menu_options as $menu_option)
                         <div class="border rounded-lg p-4 flex flex-col items-start">
                             <label class="inline-flex items-center">
+                                <!-- チェックボックスのチェックを外す -->
                                 <input type="checkbox" name="menu_option_ids[]" value="{{ $menu_option->id }}" class="form-checkbox h-5 w-5 text-blue-600">
                                 <span class="ml-2 text-gray-700">{{ $menu_option->dish_name }}</span>
                             </label>
+                            @if(in_array($menu_option->id, $userDishIds))
+                                <span class="text-sm text-green-600 mt-1">保存済み</span>
+                            @endif
                         </div>
                     @endforeach
                 </div>
             </div>
 
+            <!-- サブメニュー -->
             <div class="mb-4">
                 <h2 class="text-lg font-semibold mb-2 text-gray-700">サブメニュー</h2>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    @foreach ($menu_options->where('dish_type', 'sub') as $menu_option)
+                    @foreach ($sub_menu_options as $menu_option)
                         <div class="border rounded-lg p-4 flex flex-col items-start">
                             <label class="inline-flex items-center">
+                                <!-- チェックボックスのチェックを外す -->
                                 <input type="checkbox" name="menu_option_ids[]" value="{{ $menu_option->id }}" class="form-checkbox h-5 w-5 text-blue-600">
                                 <span class="ml-2 text-gray-700">{{ $menu_option->dish_name }}</span>
                             </label>
+                            @if(in_array($menu_option->id, $userDishIds))
+                                <span class="text-sm text-green-600 mt-1">保存済み</span>
+                            @endif
                         </div>
                     @endforeach
                 </div>
             </div>
 
-            <div class="text-center mt-6">
-                <button type="submit" class="text-white bg-green-500 hover:bg-green-600 py-2 px-8 rounded-lg text-lg">
+            <!-- ボタン -->
+            <div class="text-center mt-6 flex justify-center space-x-4">
+                <button type="submit" formaction="{{ route('user.dishes.bulkStore') }}" class="text-white bg-green-500 hover:bg-green-600 py-2 px-8 rounded-lg text-lg">
                     選択した献立を保存
+                </button>
+                <button type="submit" formaction="{{ route('user.dishes.bulkDelete') }}" class="text-white bg-red-500 hover:bg-red-600 py-2 px-8 rounded-lg text-lg">
+                    選択した献立を削除
                 </button>
             </div>
         </form>

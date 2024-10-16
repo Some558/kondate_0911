@@ -64,6 +64,12 @@ class UserMenuController extends Controller
         $subMenu1 = MenuOptions::find($sub_menu_1_id);
         $subMenu2 = MenuOptions::find($sub_menu_2_id);
 
+        // もしどれかのidが入力されていなかったら、エラーコメント表示
+        if (!$main_menu_id || !$sub_menu_1_id || !$sub_menu_2_id) {
+            return redirect()->back()
+                ->with('active_tab', $day_of_week)
+                ->with('error', 'メニューが選択されていません。');
+        }
         // ユーザーの献立を保存する処理
         $userMenu = new UserMenu();
         $userMenu->user_id = auth()->id(); // 現在のユーザーIDを設定

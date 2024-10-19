@@ -34,7 +34,7 @@ class UserDishesController extends Controller
      */
     public function create()
     {
-        //
+        ///
     }
 
     /**

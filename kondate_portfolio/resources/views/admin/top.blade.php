@@ -10,7 +10,7 @@
                 <h1 class="text-3xl font-bold title-font mb-4 text-gray-900">献立候補を登録してください</h1>
                 <button
                     onclick="location.href='{{ route('admin.menu_options.create') }}'"
-                    class="mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">
+                    class="mx-auto text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">
                     献立候補 新規登録
                 </button>
             </div>
@@ -42,7 +42,7 @@
                                         <td class="px-4 py-3 flex space-x-2">
                                             <button
                                                 onclick="location.href='{{ route('admin.menu_options.edit', ['menu_optionId' => $menu_option->id]) }}'"
-                                                class="text-indigo-600 hover:text-indigo-900">
+                                                class="text-green-600 hover:text-indigo-900">
                                                 編集
                                             </button>
                                             <form method="POST" action="{{ route('admin.menu_options.destroy', ['menu_optionId' => $menu_option->id]) }}">
@@ -86,7 +86,7 @@
                                         <td class="px-4 py-3 flex space-x-2">
                                             <button
                                                 onclick="location.href='{{ route('admin.menu_options.edit', ['menu_optionId' => $menu_option->id]) }}'"
-                                                class="text-indigo-600 hover:text-indigo-900">
+                                                class="text-green-600 hover:text-indigo-900">
                                                 編集
                                             </button>
                                             <form method="POST" action="{{ route('admin.menu_options.destroy', ['menu_optionId' => $menu_option->id]) }}">

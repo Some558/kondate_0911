@@ -1,4 +1,4 @@
-<header class="bg-blue-600 text-white">
+<header class="bg-red-400 text-white">
     <div class="container mx-auto flex flex-wrap p-3 flex-col md:flex-row items-center">
         <a href="{{ route('user.index') }}" class="flex title-font font-medium items-center mb-2 md:mb-0">
             <img src="{{ asset('images/WeellyMealPlanner-2.png') }}" alt="Logo" class="w-12 h-12 p-1 rounded-full">

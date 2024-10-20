@@ -18,7 +18,7 @@ use App\Models\MenuOptions;
             <!-- タブナビゲーション -->
             <div id="tabs" class="flex justify-around space-x-2 rounded-full bg-yellow-500/20 p-2 mb-8">
                 @foreach(['Mon', 'Tues', 'Wednes', 'Thurs', 'Fri', 'Satur', 'Sun'] as $day)
-                    <div class="tab w-full rounded-full py-3 text-lg font-semibold leading-5 text-blue-700 cursor-pointer text-center hover:bg-yellow-500 hover:text-white transition duration-300" data-tab="{{ $day }}">
+                    <div class="tab w-full rounded-full py-3 text-lg font-semibold leading-5 text-red-400 cursor-pointer text-center hover:bg-yellow-500 hover:text-white transition duration-300" data-tab="{{ $day }}">
                         {{ $day }}
                     </div>
                 @endforeach
@@ -29,7 +29,7 @@ use App\Models\MenuOptions;
                 <div id="{{ $day }}" class="tab-content mt-6 hidden">
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                         <!-- 現在のメニュー表示部分 -->
-                        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white">
+                        <div class="bg-gradient-to-r from-red-500 to-red-400 p-6 text-white">
                             <h2 class="text-2xl font-bold mb-4">{{ $day }}dayの献立</h2>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 @php
@@ -105,7 +105,7 @@ use App\Models\MenuOptions;
                             </div>
 
                             <div class="mt-8 flex space-x-4">
-                                <button type="submit" class="keep flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                                <button type="submit" class="keep flex-1 bg-green-400 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
                                     <i class="fas fa-save mr-2"></i>選択したメニューを保存
                                 </button>
                             </form>
@@ -113,7 +113,7 @@ use App\Models\MenuOptions;
                                 <form action="{{ route('user.menu.randomkeep') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="day_of_week" value="{{ $day }}">
-                                    <button type="submit" class="random flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                                    <button type="submit" class="random flex-1 bg-green-400 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
                                         <i class="fas fa-random mr-2"></i>ランダムに保存
                                     </button>
                                 </form>

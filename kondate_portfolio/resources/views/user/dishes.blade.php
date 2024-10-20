@@ -41,7 +41,7 @@
                         </div>
                     @endfor
                     <div class="p-6 w-full">
-                        <button type="submit" class="flex mx-auto text-white bg-yellow-500 border-0 py-3 px-10 focus:outline-none hover:bg-yellow-600 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105">
+                        <button type="submit" class="flex mx-auto text-white bg-green-500 border-0 py-3 px-10 focus:outline-none hover:bg-green-600 rounded-lg text-lg transition duration-300 ease-in-out transform hover:scale-105">
                             献立登録
                         </button>
                     </div>
@@ -55,7 +55,7 @@
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-bold text-gray-800">献立候補からマイ献立を選択してください</h1>
             <p>チェックボックスにチェックを入れた後、保存して下さい。</p>
-            <a href="{{ route('user.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+            <a href="{{ route('user.index') }}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
                 献立選択画面に戻る
             </a>
         </div>

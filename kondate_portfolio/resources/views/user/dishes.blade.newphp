@@ -1,5 +1,6 @@
 <!-- 献立候補追加+献立候補からマイ献立追加画面から、
-マイ献立を直接追加・マイ献立一覧表示画面に変更する-->
+マイ献立を直接追加・マイ献立一覧表示画面に変更する
+今後はこちらをメインで使う予定-->
 <x-user-layout>
     @if (session('success'))
         <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-2 mb-3 text-xs" role="alert">

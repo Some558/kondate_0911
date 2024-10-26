@@ -66,63 +66,13 @@
                 週間献立画面に戻る
             </a>
         </div>
+    <form method="GET" action="{{ route('user.index') }}">
+        @csrf
+            {{-- マイ献立に登録されているメインメニューをすべて表示する --}}
+            @foreach ($mainMenus as $mainMenu)
 
-        <form method="GET" action="{{ route('user.dishes') }}">
-            @csrf
+            {{-- マイ献立に登録されているサブメニューをすべて表示する --}}
 
-            @php
-                // 日本語のあいうえお順にソートするための関数を定義
-                function sortByJapanese($collection) {
-                    return $collection->sort(function($a, $b) {
-                        $collator = new \Collator('ja_JP');
-                        return $collator->compare($a->dish_name, $b->dish_name);
-                    });
-                }
-
-                // メインメニューをソート
-                $main_menu_options = sortByJapanese($menu_options->where('dish_type', 'main'));
-
-                // サブメニューをソート
-                $sub_menu_options = sortByJapanese($menu_options->where('dish_type', 'sub'));
-            @endphp
-
-            <!-- メインメニュー -->
-            <div class="mb-4">
-                <h2 class="text-lg font-semibold mb-2 text-gray-700">メインメニュー</h2>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    @foreach ($main_menu_options as $menu_option)
-                        <div class="border rounded-lg p-4 flex flex-col items-start">
-                            <label class="inline-flex items-center">
-                                <!-- チェックボックスのチェックを外す -->
-                                <input type="checkbox" name="menu_option_ids[]" value="{{ $menu_option->id }}" class="form-checkbox h-5 w-5 text-blue-600">
-                                <span class="ml-2 text-gray-700">{{ $menu_option->dish_name }}</span>
-                            </label>
-                            @if(in_array($menu_option->id, $userDishIds))
-                                <span class="text-sm text-green-600 mt-1">保存済み</span>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            <!-- サブメニュー -->
-            <div class="mb-4">
-                <h2 class="text-lg font-semibold mb-2 text-gray-700">サブメニュー</h2>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                    @foreach ($sub_menu_options as $menu_option)
-                        <div class="border rounded-lg p-4 flex flex-col items-start">
-                            <label class="inline-flex items-center">
-                                <!-- チェックボックスのチェックを外す -->
-                                <input type="checkbox" name="menu_option_ids[]" value="{{ $menu_option->id }}" class="form-checkbox h-5 w-5 text-blue-600">
-                                <span class="ml-2 text-gray-700">{{ $menu_option->dish_name }}</span>
-                            </label>
-                            @if(in_array($menu_option->id, $userDishIds))
-                                <span class="text-sm text-green-600 mt-1">保存済み</span>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </form>
+    </form>
     </div>
 </x-user-layout>

@@ -6,7 +6,7 @@
         </a>
         <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
             <button
-                onclick="location.href='{{ route('user.dishes') }}'"
+                onclick="location.href='{{ route('user.index') }}'"
                 class="mr-5 hover:text-gray-300">
                 マイ献立追加・削除
             </button>

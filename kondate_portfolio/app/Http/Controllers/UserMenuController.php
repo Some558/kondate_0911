@@ -48,6 +48,43 @@ class UserMenuController extends Controller
         ]);
     }
 
+        /**
+     * マイ献立一覧を表示する
+     */
+    public function indexall()
+    {
+        // 献立候補を取得
+        $menu_options = MenuOptions::all();
+
+        // メインメニューを取得
+        $mainMenus = UserDishes::with('menuOption')
+            ->where('user_id', auth()->id())
+            ->whereHas('menuOption', function($query) {
+                $query->where('dish_type', 'main');
+            })
+            ->get();
+
+        // サブメニューを取得
+        $subMenus = UserDishes::with('menuOption')
+            ->where('user_id', auth()->id())
+            ->whereHas('menuOption', function($query) {
+                $query->where('dish_type', 'sub');
+            })
+            ->get();
+
+        // 現在のユーザーの献立を取得
+        $userMenus = UserMenu::where('user_id', auth()->id())->get();
+        $userDishes = UserDishes::where('user_id', auth()->id())->get();
+
+        return view('user.dishes', [
+            'menu_options' => $menu_options,
+            'mainMenus' => $mainMenus,
+            'subMenus' => $subMenus,
+            'userMenus' => $userMenus,
+            'userDishes' => $userDishes
+        ]);
+    }
+
     /**
      * 献立を保存するメソッド
      */

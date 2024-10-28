@@ -3,7 +3,7 @@
         <div class="container px-5 py-10 mx-auto">
             <div class="flex flex-col text-center w-full mb-6">
                 <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">献立候補新規登録</h1>
-            </div>
+            </div>w
             <form method="POST" action="{{ route('admin.menu_options.store')}}">
                 @csrf
                 <div class="lg:w-1/2 md:w-2/3 mx-auto">

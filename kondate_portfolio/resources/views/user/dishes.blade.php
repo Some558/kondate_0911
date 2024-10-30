@@ -13,9 +13,11 @@
         <form method="GET" action="{{ route('user.indexall') }}">
             @csrf
                 {{-- マイ献立に登録されているメインメニューをすべて表示する --}}
-                @foreach ($mainMenus as $mainMenu)
+                @foreach ($userMenus as $userMenu)
                 <tr class="border-b hover:bg-gray-50">
-                    <td class="px-4 py-3 text-gray-800">{{ $menu_option->dish_name }}</td>
+                    <td class="px-4 py-3 text-gray-800">
+                        {{ $userMenu->mainDish->menuOption->dish_name ?? '未設定' }}
+                    </td>
                 </tr>
                 @endforeach
         </form>

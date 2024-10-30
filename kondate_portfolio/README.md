@@ -64,6 +64,6 @@
 <h2>作者</h2>
 <ul>
   <li>名前: Some558</li>
-  <li>GitHub: <a href="https://github.com/username">Someg558</a></li>
+  <li>GitHub: <a href="https://github.com/username">Some558</a></li>
   <li>お問い合わせ: https://twitter.com/somemov</li>
 </ul>

@@ -12,14 +12,32 @@
         </div>
         <form method="GET" action="{{ route('user.indexall') }}">
             @csrf
-                {{-- マイ献立に登録されているメインメニューをすべて表示する --}}
-                @foreach ($userMenus as $userMenu)
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="px-4 py-3 text-gray-800">
-                        {{ $userMenu->mainDish->menuOption->dish_name ?? '未設定' }}
-                    </td>
-                </tr>
-                @endforeach
+            <div class="overflow-auto">
+                <table class="min-w-full bg-white">
+                    <thead>
+                        <tr class="border-b hover:bg-gray-50">
+                            <th class="px-4 py-3 bg-gray-100 text-gray-800">メインメニュー</th>
+                            <th class="px-4 py-3 bg-gray-100 text-gray-800">サブメニュー</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($userDishes->groupBy('menuOption.dish_type') as $type => $dishes)
+                            @if ($type == 'main')
+                                @foreach ($dishes as $index => $mainDish)
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="px-4 py-3 text-gray-800">
+                                            {{ $mainDish->menuOption->dish_name ?? '' }}
+                                        </td>
+                                        <td class="px-4 py-3 text-gray-800">
+                                            {{ $userDishes->where('menuOption.dish_type', 'sub')->skip($index)->first()->menuOption->dish_name ?? '' }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </form>
     </div>
 </x-user-layout>

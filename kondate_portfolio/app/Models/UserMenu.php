@@ -15,9 +15,9 @@ class UserMenu extends Model
         return $this->belongsTo(UserDishes::class, 'main_dish_id');
     }
 
-    public function subDish1()
+    public function subDish()
     {
-        return $this->belongsTo(UserDishes::class, 'sub_dish1_id');
+        return $this->belongsTo(UserDishes::class, 'sub_dish_id');
     }
 
     public function subDish2()

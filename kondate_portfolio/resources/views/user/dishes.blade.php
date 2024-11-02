@@ -16,8 +16,8 @@
                 <table class="min-w-full bg-white">
                     <thead>
                         <tr class="border-b hover:bg-gray-50">
-                            <th class="px-4 py-3 bg-gray-100 text-gray-800">メインメニュー</th>
-                            <th class="px-4 py-3 bg-gray-100 text-gray-800">サブメニュー</th>
+                            <th class="px-4 py-3 bg-gray-100 text-gray-800 text-left text-xl">メインメニュー</th>
+                            <th class="px-4 py-3 bg-gray-100 text-gray-800 text-left text-xl">サブメニュー</th>
                         </tr>
                     </thead>
                     <tbody>
